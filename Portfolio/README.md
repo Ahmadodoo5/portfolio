@@ -29,3 +29,19 @@ A single-page portfolio site inspired by the [LanX Framer template](https://land
 - Add or change FAQ items in the `.faq-list` block and ensure each has `.faq-item`, `.faq-question`, and `.faq-answer`.
 
 No build step required. Works in modern browsers.
+
+## Deploy to Vercel (fixing NOT_FOUND / 404)
+
+If this repo is **custom_addons** (or the repo root is not the `Portfolio` folder), Vercel will serve from the repo root. There is no `index.html` at that root, so you get **NOT_FOUND** (404).
+
+**Fix:** Set the project **Root Directory** so Vercel uses the folder that contains `index.html`:
+
+1. Vercel Dashboard → your project → **Settings** → **General**.
+2. Under **Root Directory**, set it to the path to this folder:
+   - If the connected repo is **custom_addons**: use `Portfolio`.
+   - If the connected repo is **Odoo19_work** (parent): use `custom_addons/Portfolio`.
+3. Save and **redeploy**.
+
+After this, the site root URL will serve `Portfolio/index.html` and NOT_FOUND will go away.
+
+The `vercel.json` in this folder tells Vercel this is a static site (no build). The optional rewrite sends path-based URLs (e.g. `/about`) to `index.html` so you can add more routes later without changing config.
